@@ -1,0 +1,27 @@
+1. Create a collection named orders.
+    > db.orders.insert({"orderDate" : Date(), "orderTotal" : 1000000, "lineItems" : [{"unitPrice" : 100} , {"quantity" : 10} , {"productName" : "Thing"}]})
+    WriteResult({ "nInserted" : 1 })
+    >
+        *You could also explicitly create a collection with db.createCollection() but since MongoDB creates a collection implicitly when the collection
+        is first referenced in a command, this method is used primarily for creating new collections that use specific options.
+
+2. Insert at least 3 documents that represent an order.
+    > db.orders.insert({"orderDate" : Date(), "orderTotal" : 5000, "lineItems" : [{"unitPrice" : 50} , {"quantity" : 100} , {"productName" : "AnotherThing"}]})
+    > db.orders.insert({"orderDate" : Date(), "orderTotal" : 10000, "lineItems" : [{"unitPrice" : 10} , {"quantity" : 1000} , {"productName" : "ThirdThing"}]})
+
+3. Find a single order document, any order document.
+       db.orders.findOne()
+
+4. Find all orders and make them look pretty.
+    db.orders.find().pretty()
+
+5. Find all orders with an orderDate that is prior to 1/1/2016.
+    db.orders.find({"orderDate" : { "$lt" : { "$date" : "2016-01-01"}})
+
+6.Find all orders with an orderDate that is after 1/1/2016.
+    db.orders.find({"orderDate" : { "$lt" : { "$date" : "2016-01-01"}})
+
+    *I think these last 2 are wrong but I had trouble with them
+
+7. Find orders with lineItems that have a quantity that is less than 50, but greater than 5.
+    db.orders.find( { $and: [{ "quantity": { $lt: 50 } }, { "quantity": { $gt: 5 }}]})
